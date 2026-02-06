@@ -1,0 +1,30 @@
+# Git ignore for Crabic's GEO Intelligence Vault
+
+# Credentials & secrets
+credentials/
+*.key
+*.pem
+.env
+
+# OpenClaw internal (not vault content)
+.openclaw/
+sessions/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.swp
+*~
+
+# Node modules (if any scripts added later)
+node_modules/
+
+# But keep the vault!
+!memory/
+!memory/**/*.md
