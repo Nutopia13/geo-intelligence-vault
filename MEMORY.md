@@ -42,6 +42,7 @@ obsidian/
 - [x] Cron job scheduled for 19:00 UTC
 - [x] Brave Search API configured (2026-02-06)
 - [x] First reconnaissance complete — 3 permanent notes created
+- [x] Multi-model setup (Kimi + GPT-4o + Gemini)
 - [ ] Source watchlist built
 - [ ] Active intelligence gathering ongoing
 
@@ -97,6 +98,34 @@ If you're another agent accessing this vault:
 - `#GEO` — Generative Engine Optimization
 - `#LLMads` — LLM-based advertising
 - `#breakthrough` — Game-changing finding
+
+## Multi-Model Configuration
+
+### Available Models
+
+| Model | Alias | Use Case | Cost (input/output per 1M) | Context |
+|-------|-------|----------|---------------------------|---------|
+| **moonshot/kimi-k2.5** | Kimi | Main agent, research | $0/$0 (credits) | 256K |
+| **openai/gpt-4o** | GPT-4o | Complex reasoning, code | $2.50/$10 | 128K |
+| **openai/gpt-4o-mini** | GPT-4o-Mini | Quick tasks, low cost | $0.15/$0.60 | 128K |
+| **openai/o3-mini** | o3-mini | Reasoning, math, code | $1.10/$4.40 | 200K |
+| **google/gemini-2.0-flash** | Gemini-Flash | Frontend, vision | $0.10/$0.40 | 1M |
+| **google/gemini-2.0-flash-lite** | Gemini-Lite | Cheapest, huge context | $0.075/$0.30 | 1M |
+
+### Selection Strategy
+
+| Task | Model | Why |
+|------|-------|-----|
+| General research | **Kimi** (default) | Best cost/quality |
+| Code generation | **GPT-4o** or **o3-mini** | Superior coding |
+| Frontend/UI | **Gemini-Flash** | HTML/CSS/JS + vision |
+| Quick queries | **Gemini-Lite** | Cheapest, 1M context |
+| Complex reasoning | **o3-mini** | Built for reasoning |
+| Image analysis | **GPT-4o** / **Gemini-Flash** | Vision capable |
+
+### Override Commands
+- `/model GPT-4o` — switch for this session
+- `/model default` — back to Kimi
 - `#competitor` — Competitor intelligence
 - `#opportunity` — Strategic opening
 - `#threat` — Risk or challenge
