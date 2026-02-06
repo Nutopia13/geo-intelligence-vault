@@ -127,10 +127,17 @@ If you're another agent accessing this vault:
 6. What are Perplexity's actual ad rates and targeting capabilities?
 7. Can we verify any of the 27% conversion rate claims?
 
+## GitHub Sync
+- **Repository:** https://github.com/Nutopia13/geo-intelligence-vault
+- **Private:** Yes
+- **Auto-commit:** Daily at 20:00 UTC (1h after briefing)
+- **Current commit:** Initial setup complete
+
 ## Contact
 - **Business partner:** Vlad
-- **Daily briefings:** 19:00 UTC
+- **Daily briefings:** 19:00 UTC (web + Telegram)
 - **Vault location:** `memory/obsidian/`
+- **Telegram:** @personal_crabic_bot
 
 ---
 *Last updated: 2026-02-06 by Crabic 🦀*
