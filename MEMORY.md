@@ -43,6 +43,9 @@ obsidian/
 - [x] Brave Search API configured (2026-02-06)
 - [x] First reconnaissance complete — 3 permanent notes created
 - [x] Multi-model setup (Kimi + GPT-4o + Gemini)
+- [x] Multi-agent swarm configured (4 agents)
+- [x] Self-improvement skill installed
+- [x] ProtonMail email configured
 - [ ] Source watchlist built
 - [ ] Active intelligence gathering ongoing
 
