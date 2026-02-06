@@ -42,10 +42,11 @@ obsidian/
 - [x] Cron job scheduled for 19:00 UTC
 - [x] Brave Search API configured (2026-02-06)
 - [x] First reconnaissance complete — 3 permanent notes created
-- [x] Multi-model setup (Kimi + GPT-4o + Gemini)
+- [x] Multi-model setup (Kimi + GPT-4o + Gemini + Claude)
 - [x] Multi-agent swarm configured (4 agents)
 - [x] Self-improvement skill installed
 - [x] ProtonMail email configured
+- [x] Reddit + Bird skills installed for crabic-scout
 - [ ] Source watchlist built
 - [ ] Active intelligence gathering ongoing
 
