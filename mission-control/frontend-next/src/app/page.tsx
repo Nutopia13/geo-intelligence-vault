@@ -8,6 +8,7 @@ import { TaskCard } from '@/components/kanban/TaskCard';
 import { AgentPanel } from '@/components/kanban/AgentPanel';
 import { IntelligenceFeed } from '@/components/kanban/IntelligenceFeed';
 import { TaskModal } from '@/components/kanban/TaskModal';
+import { PixelCat, FollowingPixelCat } from '@/components/PixelCat';
 import { Button } from '@/components/ui/button';
 import { Plus, Target, Users, AlertCircle, CheckCircle2 } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
@@ -234,6 +235,10 @@ export default function MissionControl() {
         agents={agents}
         onTaskSaved={fetchData}
       />
+
+      {/* Pixel Cat */}
+      <PixelCat onMeow={() => console.log('Meow!')} />
+      <FollowingPixelCat />
     </div>
   );
 }
