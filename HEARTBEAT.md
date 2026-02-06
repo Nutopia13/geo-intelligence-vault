@@ -26,7 +26,9 @@
 6. 🆕 AUTOMATE DAILY BRIEFING — Ensure cron job triggers properly at 19:00 UTC
 
 ## Next Actions
-- [ ] Spawn crabic-scout for overnight social monitoring
-- [ ] Spawn crabic-research for arXiv paper scanning
-- [ ] Test subagent skill access (bird, reddit)
-- [ ] Create memory/heartbeat-state.json for tracking
+- [x] Spawn crabic-scout for overnight social monitoring ✅ 2026-02-06 - Found 9 signals (3 critical)
+- [x] Spawn crabic-research for arXiv paper scanning ✅ 2026-02-06 - Found 4 papers (2 high relevance)
+- [x] Test subagent skill access (bird, reddit) ✅ 2026-02-06 - Operational with web search fallback
+- [x] Create memory/heartbeat-state.json for tracking ✅ 2026-02-06 - Agent activity tracking active
+- [ ] Create permanent notes for high-priority research papers
+- [ ] Update Mission Control with subagent task integration
