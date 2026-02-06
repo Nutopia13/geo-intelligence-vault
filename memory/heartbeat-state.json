@@ -1,0 +1,39 @@
+{
+  "lastChecks": {
+    "email": null,
+    "calendar": null,
+    "weather": null,
+    "twitter": 1770412800,
+    "reddit": 1770412800,
+    "arxiv": 1770412800,
+    "newsletters": null
+  },
+  "agentActivity": {
+    "crabic-main": {
+      "lastActive": "2026-02-06T20:58:00Z",
+      "tasksToday": 18,
+      "status": "online"
+    },
+    "crabic-research": {
+      "lastActive": null,
+      "tasksToday": 0,
+      "status": "offline"
+    },
+    "crabic-scout": {
+      "lastActive": null,
+      "tasksToday": 0,
+      "status": "offline"
+    },
+    "crabic-analyst": {
+      "lastActive": null,
+      "tasksToday": 0,
+      "status": "offline"
+    }
+  },
+  "nextScheduled": {
+    "dailyBrief": "2026-02-07T19:00:00Z",
+    "githubCommit": "2026-02-07T20:00:00Z",
+    "selfImprovement": "2026-02-07T20:30:00Z"
+  },
+  "notes": "First day of swarm activation. Subagents being tested."
+}
