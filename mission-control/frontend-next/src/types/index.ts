@@ -29,6 +29,7 @@ export interface Task {
   tags: string[]
   created_at: string
   updated_at: string
+  agents?: { name: string }
 }
 
 export interface TaskAssignment {
