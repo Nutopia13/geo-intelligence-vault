@@ -89,7 +89,7 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
           <DropdownMenuContent 
             align="end" 
             className="bg-[#0f1419] border-[#00d4aa]/30"
-            onClick={(e) => e.stopPropagation()}
+            onClick={(e: React.MouseEvent) => e.stopPropagation()}
           >
             <DropdownMenuItem 
               onClick={() => onEdit(task)}

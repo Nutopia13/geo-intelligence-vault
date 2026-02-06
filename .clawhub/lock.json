@@ -4,6 +4,30 @@
     "self-improving-agent-1-0-2": {
       "version": "1.0.0",
       "installedAt": 1770390158600
+    },
+    "frontend-design-ultimate": {
+      "version": "1.0.0",
+      "installedAt": 1770394923117
+    },
+    "context-optimizer": {
+      "version": "1.0.0",
+      "installedAt": 1770394925074
+    },
+    "human-optimized-frontend": {
+      "version": "1.0.0",
+      "installedAt": 1770394926802
+    },
+    "reddit": {
+      "version": "1.0.0",
+      "installedAt": 1770395853974
+    },
+    "bird": {
+      "version": "1.0.0",
+      "installedAt": 1770395855194
+    },
+    "vercel": {
+      "version": "1.0.1",
+      "installedAt": 1770396621721
     }
   }
 }
