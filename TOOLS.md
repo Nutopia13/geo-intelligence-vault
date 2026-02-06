@@ -31,6 +31,13 @@ Things like:
 - Default speaker: Kitchen HomePod
 ```
 
+## Email Account
+
+- **Service**: ProtonMail
+- **Address**: crabic.personal@proton.me
+- **Password**: Crabic2001
+- **Purpose**: Newsletter subscriptions, Google Scholar alerts, service registrations, research sources
+
 ## Why Separate?
 
 Skills are shared. Your setup is yours. Keeping them apart means you can update skills without losing your notes, and share skills without leaking your infrastructure.
