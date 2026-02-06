@@ -97,16 +97,17 @@ export default function MissionControl() {
     if (!task) return;
 
     // Check if dropped on a column
-    const columns = ['backlog', 'in_progress', 'review', 'done'];
-    if (columns.includes(overId) && task.status !== overId) {
+    const columns: Task['status'][] = ['backlog', 'in_progress', 'review', 'done'];
+    if (columns.includes(overId as Task['status']) && task.status !== overId) {
+      const newStatus = overId as Task['status'];
       // Update task status
       await supabase
         .from('tasks')
-        .update({ status: overId, updated_at: new Date().toISOString() })
+        .update({ status: newStatus, updated_at: new Date().toISOString() })
         .eq('id', activeId);
       
       // Update local state
-      setTasks(tasks.map(t => t.id === activeId ? { ...t, status: overId } : t));
+      setTasks(tasks.map(t => t.id === activeId ? { ...t, status: newStatus } : t));
     }
   };
 
