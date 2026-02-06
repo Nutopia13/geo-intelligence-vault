@@ -219,7 +219,7 @@ export default function MissionControl() {
             </div>
           </div>
           <div className="flex-1 overflow-y-auto p-3">
-            <AgentPanel agents={agents} />
+            <AgentPanel />
           </div>
         </aside>
 
