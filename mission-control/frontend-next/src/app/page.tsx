@@ -1,5 +1,7 @@
 'use client';
 
+export const dynamic = 'force-dynamic';
+
 import { useEffect, useState } from 'react';
 import { DndContext, closestCenter, KeyboardSensor, PointerSensor, useSensor, useSensors, DragEndEvent } from '@dnd-kit/core';
 import { arrayMove, SortableContext, sortableKeyboardCoordinates, horizontalListSortingStrategy } from '@dnd-kit/sortable';
@@ -10,7 +12,7 @@ import { IntelligenceFeed } from '@/components/kanban/IntelligenceFeed';
 import { TaskModal } from '@/components/kanban/TaskModal';
 import { PixelCat, FollowingPixelCat } from '@/components/PixelCat';
 import { Button } from '@/components/ui/button';
-import { Plus, Target, Users, AlertCircle, CheckCircle2 } from 'lucide-react';
+import { Plus, Terminal, Activity, Clock, Zap, Shield, Radio } from 'lucide-react';
 import { supabase } from '@/lib/supabase';
 import type { Task, Agent, Intelligence } from '@/types';
 
@@ -21,6 +23,7 @@ export default function MissionControl() {
   const [loading, setLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingTask, setEditingTask] = useState<Task | null>(null);
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -32,24 +35,23 @@ export default function MissionControl() {
   useEffect(() => {
     fetchData();
     setupRealtimeSubscriptions();
+    const timer = setInterval(() => setCurrentTime(new Date()), 1000);
+    return () => clearInterval(timer);
   }, []);
 
   const fetchData = async () => {
     setLoading(true);
     
-    // Fetch tasks
     const { data: tasksData } = await supabase
       .from('tasks')
       .select('*, agents(name)')
       .order('created_at', { ascending: false });
     
-    // Fetch agents
     const { data: agentsData } = await supabase
       .from('agents')
       .select('*')
       .order('name');
     
-    // Fetch intelligence
     const { data: intelData } = await supabase
       .from('intelligence')
       .select('*')
@@ -63,7 +65,6 @@ export default function MissionControl() {
   };
 
   const setupRealtimeSubscriptions = () => {
-    // Subscribe to task changes
     const tasksSubscription = supabase
       .channel('tasks-channel')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'tasks' }, () => {
@@ -71,7 +72,6 @@ export default function MissionControl() {
       })
       .subscribe();
 
-    // Subscribe to agent changes
     const agentsSubscription = supabase
       .channel('agents-channel')
       .on('postgres_changes', { event: '*', schema: 'public', table: 'agents' }, () => {
@@ -87,27 +87,21 @@ export default function MissionControl() {
 
   const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event;
-
     if (!over) return;
 
     const activeId = active.id as string;
     const overId = over.id as string;
-
-    // Find the task being dragged
     const task = tasks.find(t => t.id === activeId);
     if (!task) return;
 
-    // Check if dropped on a column
     const columns: Task['status'][] = ['backlog', 'in_progress', 'review', 'done'];
     if (columns.includes(overId as Task['status']) && task.status !== overId) {
       const newStatus = overId as Task['status'];
-      // Update task status
       await supabase
         .from('tasks')
         .update({ status: newStatus, updated_at: new Date().toISOString() })
         .eq('id', activeId);
       
-      // Update local state
       setTasks(tasks.map(t => t.id === activeId ? { ...t, status: newStatus } : t));
     }
   };
@@ -132,100 +126,154 @@ export default function MissionControl() {
   const stats = {
     totalAgents: agents.length,
     activeAgents: agents.filter(a => a.status === 'online').length,
+    busyAgents: agents.filter(a => a.status === 'busy').length,
     totalTasks: tasks.length,
     completedTasks: tasks.filter(t => t.status === 'done').length,
+    criticalTasks: tasks.filter(t => t.priority === 'critical' && t.status !== 'done').length,
+  };
+
+  const formatTime = (date: Date) => {
+    return date.toISOString().split('T')[1].split('.')[0];
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0a0e1a] flex items-center justify-center">
-        <div className="text-teal-400 text-xl">Loading Mission Control...</div>
+      <div className="min-h-screen bg-[var(--bg-primary)] mc-grid-bg flex items-center justify-center">
+        <div className="text-center">
+          <Terminal className="w-12 h-12 text-[var(--accent-cyan)] mx-auto mb-4 animate-pulse" />
+          <div className="mc-heading text-[var(--accent-cyan)] text-xl">INITIALIZING MISSION CONTROL...</div>
+          <div className="text-[var(--text-muted)] text-sm mt-2">Loading tactical data</div>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0a0e1a] text-gray-100 flex">
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col min-w-0">
-        {/* Header */}
-        <header className="px-6 py-4 border-b border-gray-800 bg-[#0f1419]/80 backdrop-blur-md">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-teal-400 to-teal-600 flex items-center justify-center shadow-lg shadow-teal-400/20">
-                <Target className="w-6 h-6 text-white" />
-              </div>
-              <div>
-                <h1 className="text-xl font-bold text-white tracking-tight">Mission Control</h1>
-                <p className="text-xs text-gray-400">Kanban Dashboard</p>
-              </div>
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] flex flex-col mc-grid-bg mc-scanlines">
+      {/* Top Header Bar */}
+      <header className="h-16 border-b border-[var(--border-subtle)] bg-[var(--bg-secondary)]/80 backdrop-blur-md flex items-center px-6">
+        <div className="flex items-center justify-between w-full">
+          {/* Left: Logo & Title */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
+              <Shield className="w-6 h-6 text-[var(--accent-cyan)]" />
+              <Terminal className="w-5 h-5 text-[var(--accent-cyan)]" />
             </div>
-
-            <div className="flex items-center gap-6">
-              <div className="flex items-center gap-4">
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-teal-400">{stats.activeAgents}</p>
-                  <p className="text-xs text-gray-500">Active</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-orange-400">{stats.totalTasks - stats.completedTasks}</p>
-                  <p className="text-xs text-gray-500">Pending</p>
-                </div>
-                <div className="text-center">
-                  <p className="text-2xl font-bold text-green-400">{stats.completedTasks}</p>
-                  <p className="text-xs text-gray-500">Done</p>
-                </div>
+            <div>
+              <h1 className="mc-heading text-lg tracking-wider">MISSION CONTROL</h1>
+              <div className="flex items-center gap-2 text-xs text-[var(--text-secondary)]">
+                <span className="w-2 h-2 rounded-full bg-[var(--accent-green)] animate-pulse-glow" />
+                <span>SYSTEM ONLINE</span>
               </div>
-
-              <Button
-                onClick={() => setIsModalOpen(true)}
-                className="bg-teal-500 hover:bg-teal-600 text-black font-semibold flex items-center gap-2"
-              >
-                <Plus className="w-4 h-4" />
-                New Task
-              </Button>
             </div>
           </div>
-        </header>
 
-        {/* Kanban Board */}
-        <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
-          <div className="flex-1 overflow-x-auto overflow-y-hidden p-6">
-            <div className="flex gap-6 h-full min-w-max">
-              <KanbanColumn
-                id="backlog"
-                title="Backlog"
-                tasks={tasksByStatus.backlog}
-                onEditTask={handleEditTask}
-              />
-              <KanbanColumn
-                id="in_progress"
-                title="In Progress"
-                tasks={tasksByStatus.in_progress}
-                onEditTask={handleEditTask}
-              />
-              <KanbanColumn
-                id="review"
-                title="Review"
-                tasks={tasksByStatus.review}
-                onEditTask={handleEditTask}
-              />
-              <KanbanColumn
-                id="done"
-                title="Done"
-                tasks={tasksByStatus.done}
-                onEditTask={handleEditTask}
-              />
+          {/* Center: Stats */}
+          <div className="flex items-center gap-8">
+            <div className="mc-stat">
+              <div className="mc-stat-value text-[var(--accent-green)]">{stats.activeAgents}</div>
+              <div className="mc-stat-label">Online</div>
+            </div>
+            <div className="mc-stat">
+              <div className="mc-stat-value text-[var(--accent-amber)]">{stats.busyAgents}</div>
+              <div className="mc-stat-label">Active</div>
+            </div>
+            <div className="mc-stat">
+              <div className="mc-stat-value text-[var(--accent-cyan)]">{stats.totalTasks - stats.completedTasks}</div>
+              <div className="mc-stat-label">Pending</div>
+            </div>
+            {stats.criticalTasks > 0 && (
+              <div className="mc-stat">
+                <div className="mc-stat-value text-[var(--accent-red)]">{stats.criticalTasks}</div>
+                <div className="mc-stat-label">Critical</div>
+              </div>
+            )}
+          </div>
+
+          {/* Right: Time & Actions */}
+          <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-[var(--bg-tertiary)] rounded border border-[var(--border-subtle)]">
+              <Clock className="w-4 h-4 text-[var(--text-secondary)]" />
+              <span className="mc-data text-sm text-[var(--accent-cyan)]">{formatTime(currentTime)}</span>
+              <span className="text-xs text-[var(--text-muted)]">UTC</span>
+            </div>
+            <Button
+              onClick={() => setIsModalOpen(true)}
+              className="mc-btn-primary flex items-center gap-2"
+            >
+              <Plus className="w-4 h-4" />
+              <span className="hidden sm:inline">NEW TASK</span>
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Main Content Area */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Left Sidebar: Agent Fleet */}
+        <aside className="w-64 border-r border-[var(--border-subtle)] bg-[var(--bg-secondary)]/50 flex flex-col">
+          <div className="p-4 border-b border-[var(--border-subtle)]">
+            <div className="flex items-center gap-2 text-[var(--text-secondary)]">
+              <Radio className="w-4 h-4" />
+              <span className="mc-heading text-xs uppercase tracking-wider">Agent Fleet</span>
             </div>
           </div>
-        </DndContext>
+          <div className="flex-1 overflow-y-auto p-3">
+            <AgentPanel agents={agents} />
+          </div>
+        </aside>
+
+        {/* Center: Kanban Board */}
+        <main className="flex-1 flex flex-col min-w-0">
+          <DndContext sensors={sensors} collisionDetection={closestCenter} onDragEnd={handleDragEnd}>
+            <div className="flex-1 overflow-x-auto overflow-y-hidden p-4">
+              <div className="flex gap-4 h-full min-w-max">
+                <KanbanColumn
+                  id="backlog"
+                  title="BACKLOG"
+                  tasks={tasksByStatus.backlog}
+                  onEditTask={handleEditTask}
+                  color="var(--text-muted)"
+                />
+                <KanbanColumn
+                  id="in_progress"
+                  title="IN PROGRESS"
+                  tasks={tasksByStatus.in_progress}
+                  onEditTask={handleEditTask}
+                  color="var(--accent-amber)"
+                />
+                <KanbanColumn
+                  id="review"
+                  title="REVIEW"
+                  tasks={tasksByStatus.review}
+                  onEditTask={handleEditTask}
+                  color="var(--accent-cyan)"
+                />
+                <KanbanColumn
+                  id="done"
+                  title="DONE"
+                  tasks={tasksByStatus.done}
+                  onEditTask={handleEditTask}
+                  color="var(--accent-green)"
+                />
+              </div>
+            </div>
+          </DndContext>
+        </main>
+
+        {/* Right Sidebar: Intelligence Feed */}
+        <aside className="w-72 border-l border-[var(--border-subtle)] bg-[var(--bg-secondary)]/50 flex flex-col">
+          <div className="p-4 border-b border-[var(--border-subtle)]">
+            <div className="flex items-center gap-2 text-[var(--text-secondary)]">
+              <Activity className="w-4 h-4" />
+              <span className="mc-heading text-xs uppercase tracking-wider">Intelligence Feed</span>
+            </div>
+          </div>
+          <div className="flex-1 overflow-y-auto">
+            <IntelligenceFeed intelligence={intelligence} />
+          </div>
+        </aside>
       </div>
-
-      {/* Right Sidebar */}
-      <aside className="w-80 border-l border-gray-800 bg-[#0f1419]/60 backdrop-blur-md flex flex-col">
-        <AgentPanel agents={agents} />
-        <IntelligenceFeed intelligence={intelligence} />
-      </aside>
 
       {/* Task Modal */}
       <TaskModal

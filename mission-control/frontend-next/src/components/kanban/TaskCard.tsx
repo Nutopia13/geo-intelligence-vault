@@ -4,9 +4,9 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
-import { Calendar, AlertCircle, GripVertical, MoreHorizontal } from 'lucide-react'
+import { Calendar, AlertCircle, GripVertical, MoreHorizontal, Flag } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Avatar, AvatarFallback } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
 import { Task } from '@/types'
 import {
@@ -15,6 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { cn } from '@/lib/utils'
 
 interface TaskCardProps {
   task: Task
@@ -22,12 +23,28 @@ interface TaskCardProps {
   onDelete: (id: string) => void
 }
 
-const priorityColors = {
-  low: 'low',
-  medium: 'medium',
-  high: 'high',
-  critical: 'critical',
-} as const
+const priorityConfig = {
+  critical: { 
+    border: 'mc-priority-critical',
+    badge: 'bg-[var(--accent-red-dim)] text-[var(--accent-red)] border-[var(--accent-red)]/30',
+    icon: 'text-[var(--accent-red)]'
+  },
+  high: { 
+    border: 'mc-priority-high',
+    badge: 'bg-[var(--accent-amber-dim)] text-[var(--accent-amber)] border-[var(--accent-amber)]/30',
+    icon: 'text-[var(--accent-amber)]'
+  },
+  medium: { 
+    border: 'mc-priority-medium',
+    badge: 'bg-[var(--accent-cyan-dim)] text-[var(--accent-cyan)] border-[var(--accent-cyan)]/30',
+    icon: 'text-[var(--accent-cyan)]'
+  },
+  low: { 
+    border: 'mc-priority-low',
+    badge: 'bg-[var(--border-subtle)] text-[var(--text-muted)] border-[var(--border-default)]',
+    icon: 'text-[var(--text-muted)]'
+  },
+}
 
 export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
   const [isHovered, setIsHovered] = useState(false)
@@ -48,6 +65,7 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
   }
 
   const isOverdue = task.due_date && new Date(task.due_date) < new Date() && task.status !== 'done'
+  const priority = priorityConfig[task.priority] || priorityConfig.medium
 
   return (
     <motion.div
@@ -56,22 +74,28 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
       {...attributes}
       {...listeners}
       layout
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      whileHover={{ scale: 1.02 }}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      className="group relative p-4 rounded-lg border border-[#00d4aa]/20 bg-[#0f1419]/90 backdrop-blur-sm hover:border-[#00d4aa]/50 hover:shadow-[0_0_20px_rgba(0,212,170,0.15)] transition-all cursor-grab active:cursor-grabbing"
+      className={cn(
+        "mc-task-card relative overflow-hidden",
+        priority.border
+      )}
     >
-      {/* Drag Handle */}
+      {/* Drag Handle - Visible on Hover */}
       <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-        <GripVertical className="w-4 h-4 text-[#00d4aa]/50" />
+        <GripVertical className="w-4 h-4 text-[var(--text-muted)]" />
       </div>
 
-      {/* Header: Priority & Actions */}
-      <div className="flex items-start justify-between mb-3">
-        <Badge variant={priorityColors[task.priority]} className="text-[10px] uppercase tracking-wider">
+      {/* Header: Priority Badge & Actions */}
+      <div className="flex items-start justify-between mb-2 pr-6">
+        <Badge 
+          variant="outline" 
+          className={cn(
+            "text-[9px] uppercase tracking-wider font-medium",
+            priority.badge
+          )}
+        >
+          <Flag className={cn("w-3 h-3 mr-1", priority.icon)} />
           {task.priority}
         </Badge>
         
@@ -80,26 +104,26 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
             <Button 
               variant="ghost" 
               size="icon" 
-              className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity"
+              className="h-6 w-6 opacity-0 group-hover:opacity-100 transition-opacity -mr-2 -mt-1"
               onClick={(e) => e.stopPropagation()}
             >
-              <MoreHorizontal className="w-3 h-3 text-[#e0e0e0]/60" />
+              <MoreHorizontal className="w-3 h-3 text-[var(--text-secondary)]" />
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent 
             align="end" 
-            className="bg-[#0f1419] border-[#00d4aa]/30"
+            className="bg-[var(--bg-secondary)] border-[var(--border-default)]"
             onClick={(e: React.MouseEvent) => e.stopPropagation()}
           >
             <DropdownMenuItem 
               onClick={() => onEdit(task)}
-              className="text-[#e0e0e0] hover:bg-[#00d4aa]/10 hover:text-[#00d4aa] cursor-pointer"
+              className="text-[var(--text-primary)] hover:bg-[var(--accent-cyan-dim)] hover:text-[var(--accent-cyan)] cursor-pointer text-sm"
             >
-              Edit
+              Edit Task
             </DropdownMenuItem>
             <DropdownMenuItem 
               onClick={() => onDelete(task.id)}
-              className="text-red-400 hover:bg-red-500/10 hover:text-red-400 cursor-pointer"
+              className="text-[var(--accent-red)] hover:bg-[var(--accent-red-dim)] hover:text-[var(--accent-red)] cursor-pointer text-sm"
             >
               Delete
             </DropdownMenuItem>
@@ -108,13 +132,13 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
       </div>
 
       {/* Title */}
-      <h4 className="font-medium text-[#e0e0e0] mb-2 pr-6 font-[family-name:var(--font-space-grotesk)]">
+      <h4 className="font-medium text-[var(--text-primary)] mb-2 pr-2 text-sm leading-snug">
         {task.title}
       </h4>
 
       {/* Description Preview */}
       {task.description && (
-        <p className="text-xs text-[#e0e0e0]/50 mb-3 line-clamp-2">
+        <p className="text-xs text-[var(--text-secondary)] mb-3 line-clamp-2 leading-relaxed">
           {task.description}
         </p>
       )}
@@ -122,23 +146,31 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
       {/* Tags */}
       {task.tags && task.tags.length > 0 && (
         <div className="flex flex-wrap gap-1 mb-3">
-          {task.tags.map((tag, idx) => (
+          {task.tags.slice(0, 3).map((tag, idx) => (
             <span 
               key={idx}
-              className="text-[10px] px-2 py-0.5 rounded-full bg-[#00d4aa]/10 text-[#00d4aa]/80 border border-[#00d4aa]/20"
+              className="text-[9px] px-1.5 py-0.5 rounded bg-[var(--bg-primary)] text-[var(--text-secondary)] border border-[var(--border-subtle)]"
             >
               {tag}
             </span>
           ))}
+          {task.tags.length > 3 && (
+            <span className="text-[9px] px-1.5 py-0.5 text-[var(--text-muted)]">
+              +{task.tags.length - 3}
+            </span>
+          )}
         </div>
       )}
 
-      {/* Footer: Due Date & Assignees */}
-      <div className="flex items-center justify-between">
-        {task.due_date && (
-          <div className={`flex items-center gap-1 text-xs ${isOverdue ? 'text-red-400' : 'text-[#e0e0e0]/40'}`}>
+      {/* Footer: Due Date & Assignee */}
+      <div className="flex items-center justify-between pt-2 border-t border-[var(--border-subtle)]">
+        {task.due_date ? (
+          <div className={cn(
+            "flex items-center gap-1 text-xs",
+            isOverdue ? 'text-[var(--accent-red)]' : 'text-[var(--text-muted)]'
+          )}>
             <Calendar className="w-3 h-3" />
-            <span className="font-mono text-[10px]">
+            <span className="mc-data text-[10px]">
               {new Date(task.due_date).toLocaleDateString('en-US', { 
                 month: 'short', 
                 day: 'numeric' 
@@ -146,22 +178,26 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
             </span>
             {isOverdue && <AlertCircle className="w-3 h-3 ml-1" />}
           </div>
+        ) : (
+          <div />
         )}
         
-        <div className="flex -space-x-2">
-          {task.agents?.name && (
-            <Avatar className="w-6 h-6 ring-1 ring-[#0f1419]">
-              <AvatarFallback className="text-[8px] bg-[#1a1f2e] text-[#00d4aa]">
-                {task.agents.name.split(' ').map(n => n[0]).join('')}
-              </AvatarFallback>
-            </Avatar>
-          )}
-        </div>
+        {task.agents?.name ? (
+          <Avatar className="w-6 h-6 ring-1 ring-[var(--bg-secondary)]">
+            <AvatarFallback className="text-[8px] bg-[var(--bg-elevated)] text-[var(--accent-cyan)]">
+              {task.agents.name.split(' ').map(n => n[0]).join('').toUpperCase()}
+            </AvatarFallback>
+          </Avatar>
+        ) : (
+          <div className="w-6 h-6 rounded-full bg-[var(--bg-tertiary)] border border-dashed border-[var(--border-subtle)] flex items-center justify-center">
+            <span className="text-[8px] text-[var(--text-muted)]">?</span>
+          </div>
+        )}
       </div>
 
-      {/* Hover Glow Effect */}
+      {/* Hover Glow Overlay */}
       <motion.div
-        className="absolute inset-0 rounded-lg bg-gradient-to-br from-[#00d4aa]/5 to-transparent pointer-events-none"
+        className="absolute inset-0 bg-gradient-to-br from-[var(--accent-cyan-dim)] to-transparent pointer-events-none"
         animate={{ opacity: isHovered ? 1 : 0 }}
         transition={{ duration: 0.2 }}
       />

@@ -2,7 +2,7 @@ import { createClient } from '@supabase/supabase-js'
 import { Agent, Mission, Task, Intelligence, TaskAssignment, TaskWithAssignees } from '@/types'
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || 'https://amaawfhjrewqqihwuifw.supabase.co'
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || ''
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || 'dummy-key-for-build'
 
 export const supabase = createClient(supabaseUrl, supabaseKey, {
   realtime: {

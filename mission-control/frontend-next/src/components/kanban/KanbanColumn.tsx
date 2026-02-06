@@ -13,24 +13,20 @@ interface KanbanColumnProps {
   tasks: Task[]
   onEditTask: (task: Task) => void
   onDeleteTask?: (id: string) => void
+  color?: string
 }
 
-const columnColors: Record<string, string> = {
-  backlog: 'border-t-blue-500/50',
-  in_progress: 'border-t-yellow-500/50',
-  review: 'border-t-orange-500/50',
-  done: 'border-t-[#00d4aa]/50',
+const columnGradients: Record<string, string> = {
+  backlog: 'from-[var(--text-muted)] to-transparent',
+  in_progress: 'from-[var(--accent-amber)] to-transparent',
+  review: 'from-[var(--accent-cyan)] to-transparent',
+  done: 'from-[var(--accent-green)] to-transparent',
 }
 
-const columnIcons: Record<string, string> = {
-  backlog: '◆',
-  in_progress: '◈',
-  review: '◇',
-  done: '✓',
-}
-
-export function KanbanColumn({ id, title, tasks, onEditTask, onDeleteTask = () => {} }: KanbanColumnProps) {
+export function KanbanColumn({ id, title, tasks, onEditTask, onDeleteTask = () => {}, color }: KanbanColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id })
+
+  const gradientClass = columnGradients[id] || 'from-[var(--accent-cyan)] to-transparent'
 
   return (
     <motion.div
@@ -38,27 +34,36 @@ export function KanbanColumn({ id, title, tasks, onEditTask, onDeleteTask = () =
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
       className={cn(
-        "flex flex-col h-full min-h-[500px] rounded-xl border border-[#00d4aa]/10 bg-[#0a0e12]/50 backdrop-blur-sm",
-        "border-t-4",
-        columnColors[id] || 'border-t-[#00d4aa]/50'
+        "flex flex-col h-full w-80 rounded-lg overflow-hidden",
+        "bg-[var(--bg-secondary)] border border-[var(--border-subtle)]",
+        "transition-all duration-200",
+        isOver && "border-[var(--accent-cyan)] mc-glow-cyan"
       )}
     >
-      {/* Column Header */}
-      <div className="flex items-center justify-between p-4 border-b border-[#00d4aa]/10">
-        <div className="flex items-center gap-2">
-          <span className="text-[#00d4aa]/60 text-sm">{columnIcons[id] || '◆'}</span>
-          <h3 className="font-semibold text-[#e0e0e0] uppercase tracking-wider text-sm font-[family-name:var(--font-space-grotesk)]">
+      {/* Column Header with Gradient Top Border */}
+      <div className={cn(
+        "mc-column-header relative overflow-hidden",
+      )}>
+        {/* Gradient Line */}
+        <div className={cn(
+          "absolute top-0 left-0 right-0 h-[2px] bg-gradient-to-r",
+          gradientClass
+        )} />
+        
+        <div className="flex items-center gap-3">
+          <span 
+            className="w-2 h-2 rounded-full"
+            style={{ backgroundColor: color || 'var(--accent-cyan)' }}
+          />
+          <h3 className="mc-heading text-xs tracking-[0.15em]">
             {title}
           </h3>
         </div>
+        
         <div className="flex items-center gap-2">
-          <span className="text-xs text-[#e0e0e0]/40 font-mono">
-            {tasks.length}
+          <span className="mc-data text-lg" style={{ color: color || 'var(--accent-cyan)' }}>
+            {tasks.length.toString().padStart(2, '0')}
           </span>
-          <div className={cn(
-            "w-2 h-2 rounded-full",
-            tasks.length > 0 ? 'bg-[#00d4aa]/60' : 'bg-[#00d4aa]/20'
-          )} />
         </div>
       </div>
 
@@ -67,40 +72,36 @@ export function KanbanColumn({ id, title, tasks, onEditTask, onDeleteTask = () =
         ref={setNodeRef}
         className={cn(
           "flex-1 p-3 space-y-3 overflow-y-auto min-h-[400px] transition-colors",
-          isOver && "bg-[#00d4aa]/5 rounded-b-xl"
+          isOver && "bg-[var(--accent-cyan-dim)]"
         )}
       >
         <SortableContext 
           items={tasks.map(t => t.id)} 
           strategy={verticalListSortingStrategy}
         >
-          {tasks.map((task) => (
-            <TaskCard
+          {tasks.map((task, index) => (
+            <motion.div
               key={task.id}
-              task={task}
-              onEdit={onEditTask}
-              onDelete={onDeleteTask}
-            />
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: index * 0.05 }}
+            >
+              <TaskCard
+                task={task}
+                onEdit={onEditTask}
+                onDelete={onDeleteTask}
+              />
+            </motion.div>
           ))}
         </SortableContext>
 
         {tasks.length === 0 && (
-          <div className="flex flex-col items-center justify-center h-32 text-[#e0e0e0]/20 border-2 border-dashed border-[#00d4aa]/10 rounded-lg">
-            <span className="text-2xl mb-2">+</span>
-            <span className="text-xs uppercase tracking-wider">Drop here</span>
+          <div className="flex flex-col items-center justify-center h-32 border border-dashed border-[var(--border-subtle)] rounded-md text-[var(--text-muted)]">
+            <span className="mc-data text-2xl mb-1 opacity-30">+</span>
+            <span className="text-xs uppercase tracking-wider opacity-50">Drop tasks here</span>
           </div>
         )}
       </div>
-
-      {/* Glow Effect on Drag Over */}
-      {isOver && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          className="absolute inset-0 rounded-xl bg-[#00d4aa]/5 pointer-events-none"
-        />
-      )}
     </motion.div>
   )
 }
