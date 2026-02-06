@@ -130,7 +130,7 @@ export default function MissionControl() {
 
   const stats = {
     totalAgents: agents.length,
-    activeAgents: agents.filter(a => a.status === 'active').length,
+    activeAgents: agents.filter(a => a.status === 'online').length,
     totalTasks: tasks.length,
     completedTasks: tasks.filter(t => t.status === 'done').length,
   };

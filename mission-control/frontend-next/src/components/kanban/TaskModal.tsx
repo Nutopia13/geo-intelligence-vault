@@ -20,13 +20,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { TaskWithAssignees, Agent } from '@/types'
+import { Task, Agent } from '@/types'
 
 interface TaskModalProps {
   isOpen: boolean
   onClose: () => void
-  onSubmit: (task: Partial<TaskWithAssignees>) => void
-  task?: TaskWithAssignees | null
+  onTaskSaved: (task: Partial<Task>) => void
+  task?: Task | null
   agents: Agent[]
 }
 
@@ -44,7 +44,7 @@ const statuses = [
   { value: 'done', label: 'Done' },
 ]
 
-export function TaskModal({ isOpen, onClose, onSubmit, task, agents }: TaskModalProps) {
+export function TaskModal({ isOpen, onClose, onTaskSaved, task, agents }: TaskModalProps) {
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [priority, setPriority] = useState('medium')
@@ -64,7 +64,7 @@ export function TaskModal({ isOpen, onClose, onSubmit, task, agents }: TaskModal
       setStatus(task.status)
       setDueDate(task.due_date ? task.due_date.split('T')[0] : '')
       setTags(task.tags || [])
-      setSelectedAgents(task.assignees?.map(a => a.id) || [])
+      setSelectedAgents([])
     } else {
       setTitle('')
       setDescription('')
@@ -79,7 +79,7 @@ export function TaskModal({ isOpen, onClose, onSubmit, task, agents }: TaskModal
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
-    onSubmit({
+    onTaskSaved({
       id: task?.id,
       title,
       description,
@@ -87,7 +87,6 @@ export function TaskModal({ isOpen, onClose, onSubmit, task, agents }: TaskModal
       status: status as any,
       due_date: dueDate || undefined,
       tags,
-      assignees: agents.filter(a => selectedAgents.includes(a.id)),
     })
     onClose()
   }

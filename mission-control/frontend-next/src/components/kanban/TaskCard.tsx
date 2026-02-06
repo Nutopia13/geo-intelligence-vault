@@ -8,7 +8,7 @@ import { Calendar, AlertCircle, GripVertical, MoreHorizontal } from 'lucide-reac
 import { Badge } from '@/components/ui/badge'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
-import { TaskWithAssignees } from '@/types'
+import { Task } from '@/types'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,8 +17,8 @@ import {
 } from '@/components/ui/dropdown-menu'
 
 interface TaskCardProps {
-  task: TaskWithAssignees
-  onEdit: (task: TaskWithAssignees) => void
+  task: Task
+  onEdit: (task: Task) => void
   onDelete: (id: string) => void
 }
 
@@ -149,14 +149,13 @@ export function TaskCard({ task, onEdit, onDelete }: TaskCardProps) {
         )}
         
         <div className="flex -space-x-2">
-          {task.assignees?.map((agent) => (
-            <Avatar key={agent.id} className="w-6 h-6 ring-1 ring-[#0f1419]">
-              <AvatarImage src={agent.avatar_url} />
+          {task.agents?.name && (
+            <Avatar className="w-6 h-6 ring-1 ring-[#0f1419]">
               <AvatarFallback className="text-[8px] bg-[#1a1f2e] text-[#00d4aa]">
-                {agent.name.split(' ').map(n => n[0]).join('')}
+                {task.agents.name.split(' ').map(n => n[0]).join('')}
               </AvatarFallback>
             </Avatar>
-          ))}
+          )}
         </div>
       </div>
 

@@ -4,15 +4,15 @@ import { useDroppable } from '@dnd-kit/core'
 import { SortableContext, verticalListSortingStrategy } from '@dnd-kit/sortable'
 import { motion } from 'framer-motion'
 import { TaskCard } from './TaskCard'
-import { TaskWithAssignees } from '@/types'
+import { Task } from '@/types'
 import { cn } from '@/lib/utils'
 
 interface KanbanColumnProps {
   id: string
   title: string
-  tasks: TaskWithAssignees[]
-  onEditTask: (task: TaskWithAssignees) => void
-  onDeleteTask: (id: string) => void
+  tasks: Task[]
+  onEditTask: (task: Task) => void
+  onDeleteTask?: (id: string) => void
 }
 
 const columnColors: Record<string, string> = {
@@ -29,7 +29,7 @@ const columnIcons: Record<string, string> = {
   done: '✓',
 }
 
-export function KanbanColumn({ id, title, tasks, onEditTask, onDeleteTask }: KanbanColumnProps) {
+export function KanbanColumn({ id, title, tasks, onEditTask, onDeleteTask = () => {} }: KanbanColumnProps) {
   const { setNodeRef, isOver } = useDroppable({ id })
 
   return (
