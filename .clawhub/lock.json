@@ -28,6 +28,18 @@
     "vercel": {
       "version": "1.0.1",
       "installedAt": 1770396621721
+    },
+    "academic-deep-research": {
+      "version": "1.0.0",
+      "installedAt": 1770466145771
+    },
+    "deep-research-pro": {
+      "version": "1.0.2",
+      "installedAt": 1770466147274
+    },
+    "research-tracker": {
+      "version": "0.1.0",
+      "installedAt": 1770466148855
     }
   }
 }
