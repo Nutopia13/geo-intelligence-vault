@@ -37,6 +37,14 @@ The GEO/AEO/LLM advertising market is experiencing explosive growth as brands ru
 - **Prompt-Based Pricing:** Most SaaS platforms limit by "prompts per month" - indicates high API costs for LLM querying.
 - **Agency White-Label:** AIOSCop is the only pure white-label platform. Opportunity for agency-focused white-label solutions.
 
+### Onboarding Flow Key Findings
+
+- **Time-to-Value Spectrum:** Ranges from minutes (Geoptie) to weeks/months (Enterprise platforms)
+- **Self-Serve Gap:** Only 2 of 9 platforms offer true self-serve onboarding
+- **Friction Analysis:** Enterprise platforms require 3-5 touchpoints before value delivery
+- **Data Collection:** SaaS platforms collect minimal data; enterprises require extensive qualification
+- **Unique Features:** Automatic competitor discovery (Geoptie), white-label branding setup (AIOSCop), personalized first reports (Evertune)
+
 ---
 
 ## 2. Competitor Directory (25 Companies)
@@ -775,7 +783,289 @@ The GEO/AEO/LLM advertising market is experiencing explosive growth as brands ru
 
 ---
 
-### 7.3 Free Tool Offerings Summary
+### 7.3 Onboarding Flows & Signup Experience Analysis
+
+*Research Method: Web-based competitive analysis of signup processes, onboarding flows, and user experience documentation (February 7, 2026)*
+
+#### **Geoptie - Self-Serve Onboarding (No Sales Required)**
+
+**Signup Process:**
+- **Step 1:** Visit geoptie.com/app → Instant access to full platform
+- **Step 2:** Create free account (no credit card required)
+- **Step 3:** Add brand name and primary domain
+- **Step 4:** Automatic competitor discovery and scanning
+- **Time to First Value:** Within minutes
+
+**Onboarding Flow:**
+1. **Brand Setup:** Enter brand name + domain → Immediate AI response scan
+2. **Competitor Discovery:** AI automatically identifies and tracks competitors in niche
+3. **First GEO Audit:** Run audit on homepage/landing page → Instant GEO score + recommendations
+4. **Prompt Monitoring Setup:** Browse AI-powered prompt suggestions or add custom prompts
+5. **Dashboard Exploration:** Access to all features during open beta (currently free)
+
+**Data Collected During Signup:**
+- Brand name
+- Primary domain
+- Email address
+- (Optional) Competitor websites
+
+**User Experience Highlights:**
+- No complex onboarding questionnaire
+- Instant insights within moments of signup
+- Automatic competitor identification (unique feature)
+- Real-time GEO scoring in Content Studio
+- Free during open beta
+
+**Friction Points:** None identified - designed for immediate value delivery
+
+---
+
+#### **Evertune - Enterprise Demo-Only Process**
+
+**Signup Process:**
+- **Step 1:** Visit evertune.ai/get-started
+- **Step 2:** Fill out contact form with business details
+- **Step 3:** Wait for client team to contact
+- **Step 4:** Schedule demo walkthrough
+- **Step 5:** Receive first report during demo
+- **Time to First Value:** Days to weeks (depends on sales cycle)
+
+**Form Fields Required:**
+- Name
+- Email
+- Company
+- Job title
+- Phone number
+- Company size/revenue (implied for Fortune 500 targeting)
+
+**Onboarding Experience:**
+- "Fill out the form and our client team will be in touch to walk you through your first report"
+- Demo includes personalized brand analysis
+- Shows "what AI says about your brand - and how to optimize it"
+- No self-serve option available
+
+**Friction Points:**
+- High friction: Form → Wait → Schedule → Demo
+- No immediate value delivery
+- Enterprise sales cycle required
+- No transparent pricing
+
+**Target User:** Fortune 500 marketing teams only
+
+---
+
+#### **Profound - Enterprise Sales Process**
+
+**Signup Process:**
+- **Step 1:** Request demo via website
+- **Step 2:** Sales team qualification call
+- **Step 3:** Product demo presentation
+- **Step 4:** Custom proposal
+- **Step 5:** Contract negotiation
+- **Time to First Value:** Weeks to months
+
+**Onboarding Flow (Post-Sale):**
+- Lite plan: Limited self-serve capabilities
+- Enterprise plan: Dedicated onboarding team
+- 4-week onboarding process mentioned in reviews
+- Custom dashboard configuration
+- Prompt set standardization per brand
+
+**Data Requirements:**
+- Brand taxonomies
+- Core prompt sets
+- Multi-region visibility requirements
+- CDN integration setup (AWS, Cloudflare, Netlify)
+
+**User Experience Notes:**
+- "Sleek AI-first user experience" (from reviews)
+- "Highly customizable dashboards"
+- "Direct consumer interface monitoring"
+- Built-in sentiment analysis
+- 400M+ conversation dataset access
+
+**Friction Points:**
+- No free trial available
+- Must upgrade to $399+ plan for Perplexity tracking
+- Complex enterprise onboarding
+- Limited self-serve for lower tiers
+
+---
+
+#### **Growth.pro - Agency Consultation Model**
+
+**Signup Process:**
+- **Step 1:** Visit growth.pro
+- **Step 2:** "Let us Audit Your Site for FREE!" CTA
+- **Step 3:** Contact form or direct outreach
+- **Step 4:** Discovery call scheduled
+- **Step 5:** Free audit delivered
+- **Time to First Value:** Days (for audit delivery)
+
+**Lead Capture Strategy:**
+- AI chatbot "Zicy" on homepage for immediate engagement
+- Free audit offer as primary lead magnet
+- Case study social proof on homepage
+- Performance guarantee messaging
+
+**Onboarding Flow (Post-Sale):**
+- SEO discovery workshop
+- Comprehensive keyword research
+- Competitor analysis
+- Semantic keyword list creation
+- Content strategy development
+- Ongoing monthly optimization
+
+**Data Collected:**
+- Website URL
+- Business goals
+- Target keywords
+- Competitor information
+- Current marketing challenges
+
+**Friction Points:**
+- No self-serve option
+- Requires sales conversation
+- No transparent pricing
+- Service-based (not product-based)
+
+---
+
+#### **RevvGrowth - SaaS Agency Hybrid**
+
+**Signup Process:**
+- **Step 1:** Visit revvgrowth.com/geo-agency
+- **Step 2:** "Request a Demo" or "Book your free Gen AI visibility audit"
+- **Step 3:** Form submission
+- **Step 4:** Demo/audit delivery
+- **Time to First Value:** Days
+
+**Unique Approach:**
+- Positions as "The GEO Agency Behind the Brands AI Actually Recommends"
+- Manual citation tracking (50+ buyer-intent queries monthly)
+- Heavy focus on B2B SaaS exclusively
+
+**Onboarding Flow:**
+1. Free Gen AI visibility audit
+2. Competitive positioning analysis
+3. Custom GEO strategy proposal
+4. 5-step framework implementation
+5. Monthly AI citation performance reporting
+
+**Data Requirements:**
+- Website URL
+- Target buyer personas
+- Current content assets
+- Competitor list
+- Business goals
+
+---
+
+#### **AIOSCop - White-Label Agency Platform**
+
+**Signup Process:**
+- **Step 1:** Visit aioscop.com/pricing or /agencies
+- **Step 2:** 14-day free trial signup
+- **Step 3:** Platform integration setup
+- **Step 4:** White-label configuration
+- **Time to First Value:** Hours to days
+
+**Onboarding Features:**
+- Team role assignment (Admin, Manager, Analyst)
+- WordPress/Shopify/Ikas integration
+- White-label report branding setup
+- Client onboarding templates
+- API access configuration
+
+**Platform Integrations:**
+- One-click WordPress plugin install
+- Shopify App Store integration
+- Ikas API-based connection
+- WooCommerce support
+- Metafield support for Shopify
+
+**Data Collected:**
+- Agency information
+- Team member details
+- Client websites/platforms
+- Branding assets (logo, colors)
+- Integration credentials
+
+---
+
+### 7.4 Onboarding Comparison Matrix
+
+| Platform | Signup Type | Time to Value | Credit Card Required | Self-Serve | Sales Touch |
+|----------|-------------|---------------|---------------------|------------|-------------|
+| Geoptie | Instant | Minutes | No | ✓ Full | None |
+| AIOSCop | Trial | Hours | No | ✓ Full | Optional |
+| Profound | Demo Request | Weeks | N/A | ✗ None | Required |
+| Evertune | Demo Request | Days-Weeks | N/A | ✗ None | Required |
+| Growth.pro | Consultation | Days | N/A | ✗ None | Required |
+| RevvGrowth | Consultation | Days | N/A | ✗ None | Required |
+
+### 7.5 Key Onboarding Insights
+
+**1. Self-Serve vs. Sales-Led Split:**
+- Only Geoptie and AIOSCop offer true self-serve onboarding
+- Enterprise platforms (Profound, Evertune) require sales demos
+- Agencies (Growth.pro, RevvGrowth) use consultation model
+
+**2. Time-to-Value Spectrum:**
+- **Immediate:** Geoptie (minutes)
+- **Fast:** AIOSCop (hours)
+- **Moderate:** RevvGrowth, Growth.pro (days)
+- **Slow:** Evertune, Profound (weeks)
+
+**3. Friction Analysis:**
+- **Lowest Friction:** Geoptie (no credit card, immediate insights)
+- **Highest Friction:** Enterprise platforms (multiple calls, contracts)
+
+**4. Data Collection Patterns:**
+- **SaaS Platforms:** Minimal (email, domain, brand name)
+- **Enterprise:** Extensive (company size, use case, integrations)
+- **Agencies:** Business goals, challenges, current state
+
+**5. Unique Onboarding Features:**
+- Geoptie: Automatic competitor discovery
+- AIOSCop: White-label branding setup
+- Profound: Custom dashboard configuration
+- Evertune: Personalized first report during demo
+
+---
+
+### 7.6 Dashboard Features Deep-Dive
+
+#### **Geoptie Dashboard Components:**
+1. **Brand Monitoring:** Track multiple brands across all major AI platforms
+2. **Competitor Analytics:** Head-to-head comparisons, ranking trends
+3. **Citation Analytics:** Domain authority, citation frequency, source analysis
+4. **Prompt Tracking:** Subscribe to prompts, track response changes over time
+5. **GEO Audit Reports:** URL analysis, optimization scoring, recommendations
+6. **Content Studio:** Real-time GEO scoring while writing
+7. **Free Tools Suite:** 6 standalone tools (no signup required)
+
+#### **Profound Dashboard Components:**
+1. **AI Visibility Dashboard:** Hub of the platform
+2. **Conversation Explorer:** Citation visualization
+3. **Sentiment Analysis:** Brand perception tracking
+4. **Prompt Volumes:** Search volume data for AI prompts
+5. **One-Click Content Creation:** AI-optimized content generation
+6. **Real-time Optimization:** Adjust messaging based on performance
+7. **Custom Reports:** Tailored to specific brand needs
+
+#### **Evertune Dashboard Components:**
+1. **AI Brand Index:** Snapshot of overall AI visibility
+2. **EverPanel:** Consumer panel data (25M people)
+3. **Brand Monitoring:** Cross-platform reputation tracking
+4. **Website Optimization:** Technical audit for AI crawlers
+5. **Content Strategy:** Data-driven recommendations
+6. **Topic Relevance Scoring:** Brand/category alignment
+7. **Sentiment Tracking:** How AI describes your brand
+
+---
+
+### 7.8 Free Tool Offerings Summary
 
 | Platform | Free GEO Audit | Free Content Checker | Free Trial | Self-Serve Signup |
 |----------|---------------|---------------------|------------|-------------------|
@@ -789,7 +1079,7 @@ The GEO/AEO/LLM advertising market is experiencing explosive growth as brands ru
 | Essio | | | Unknown | Unknown |
 | Peec AI | | | Unknown | Unknown |
 
-### 7.4 Pricing Comparison Matrix
+### 7.9 Pricing Comparison Matrix
 
 | Platform | Entry Price | Mid Price | Enterprise | Pricing Model |
 |----------|-------------|-----------|------------|---------------|
@@ -800,7 +1090,7 @@ The GEO/AEO/LLM advertising market is experiencing explosive growth as brands ru
 | Peec AI | Custom | Custom | Custom | Agency-focused |
 | AIOSCop | Unknown | Unknown | Unknown | Per-client |
 
-### 7.5 Key Insights from Platform Research
+### 7.10 Key Insights from Platform Research
 
 1. **Freemium Strategy Gap:** Only Geoptie offers comprehensive free tools without signup. Most competitors require contact/demo for any access.
 
@@ -876,10 +1166,10 @@ The GEO/AEO/LLM advertising market is experiencing explosive growth as brands ru
 
 ### Platform Research Sources
 
-- geoptie.com - Pricing, features, free tools
-- evertune.ai - Enterprise platform features
-- aioscop.com - Agency white-label platform
-- tryprofound.com - Enterprise GEO pricing
+- geoptie.com - Pricing, features, free tools, onboarding flow
+- evertune.ai - Enterprise platform features, demo process
+- aioscop.com - Agency white-label platform, signup flow
+- tryprofound.com - Enterprise GEO pricing, dashboard features
 - essio.ai - AI search optimization features
 - peec.ai - Agency analytics pricing
 - growth.pro - Agency services & frameworks
@@ -888,10 +1178,16 @@ The GEO/AEO/LLM advertising market is experiencing explosive growth as brands ru
 - getmint.ai - Profound alternatives review
 - seranking.com - GEO platform comparison
 - writesonic.com - Profound review and pricing
+- searchengineland.com - Geoptie dashboard launch announcement
+- digitrendz.blog - Geoptie prompt tracking features
+- apinedaj.com - Geoptie dashboard review
+- generatemore.ai - Profound AI user experience review
+- rankability.com - Profound AI dashboard features
+- nicklafferty.com - Profound platform review
 
 ---
 
-## 9. Appendix: Competitor Matrix
+## 11. Appendix: Competitor Matrix
 
 | Agency | GEO | AEO | LLMO | Pricing | B2B Focus | SaaS Focus | Platform | Case Studies |
 |--------|-----|-----|------|---------|-----------|------------|----------|--------------|

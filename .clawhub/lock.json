@@ -40,6 +40,14 @@
     "research-tracker": {
       "version": "0.1.0",
       "installedAt": 1770466148855
+    },
+    "founder-coach": {
+      "version": "0.0.1",
+      "installedAt": 1770509141940
+    },
+    "business-development": {
+      "version": "1.0.0",
+      "installedAt": 1770509153427
     }
   }
 }
